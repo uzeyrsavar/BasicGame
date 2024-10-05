@@ -1,0 +1,324 @@
+from tkinter import *
+from tkinter import messagebox
+form =Tk()
+form.title('Uygulama')
+form.configure(bg = '#bef5f4')  # '#ff6060'
+form.geometry('400x300')
+kayıtlı_dosyalar = {}
+kul_ad = None
+şifre = None
+
+def griş_ekranı():
+    temizle()
+    global şifre, kul_ad
+    kul_ad2 = Label(form,font= ('Arial 13 bold'),bg='#bef5f4',text='Kulanıcı Adı')
+    şifre2 = Label(form,font=('Arial 13 bold'),bg='#bef5f4',text='Şifre')
+    
+
+    kul_ad2.place(x=50,y=28)
+    şifre2.place(x=50,y=55)
+    
+    nokta = Label(form,font=('Arial 13 bold'),bg='#bef5f4',text=':')
+    nokta1 = Label(form,font=('Arial 13 bold'),bg='#bef5f4',text=':')
+    
+
+    nokta.place(x=150,y=28)
+    nokta1.place(x=150,y=55)
+
+    grş_ent1=Entry(form,width=20)
+    grş_ent1.place(x=180,y=30)
+    grş_ent2=Entry(form,width=20,show='*')
+    grş_ent2.place(x=180,y=60)
+
+    Griş_buton= Button(form,text='Giriş Yap',bg='green',font=('Arial 13 bold'),width= 10,command=lambda : giris_yap(grş_ent1, grş_ent2))
+    Kayıt_button= Button(form,text='Kayıt OL',bg='yellow',font=('Arial 13 bold'),width= 10,command=kayıt_ekranı)
+    
+    Griş_buton.place(x=80, y=250)
+    Kayıt_button.place(x=200, y=250)
+    
+    #####Admin Girişi#####
+    Button(form,text='Adimin girişi',command=ana_sayfa).place(x=200, y=150)
+
+def temizle():
+    for widget in form.winfo_children():
+        widget.destroy()
+
+
+def kayıt_ekranı():
+    global şifre,kul_ad,a
+    temizle()
+    ad = Label(form,font= ('Arial 13 bold'),bg='#bef5f4',text='Kulanıcı Adı')
+    soyad = Label(form,font=('Arial 13 bold'),bg='#bef5f4',text='Şifre')
+    yaş = Label(form,font=('Arial 13 bold'),bg='#bef5f4',text='Yaş')
+    dogum = Label(form,font=('Arial 13 bold'),bg='#bef5f4',text='Doğum')
+    cinsiyet = Label(form,font=('Arial 13 bold'),bg='#bef5f4',text='Cinsiyet')
+    a = IntVar()
+    Checkbutton(form,text='Sözlemeyi Kabul Ediyorum.',variable=a).place(x=110,y=205)
+
+    
+    
+
+            
+
+
+
+
+    
+    ad.grid(column=0,row=0,padx=10,pady=5)
+    soyad.grid(column=0,row=1,padx=10,pady=5)
+    yaş.grid(column=0,row=2,padx=10,pady=5)
+    dogum.grid(column=0,row=3,padx=10,pady=5)
+    cinsiyet.grid(column=0,row=4,padx=10,pady=5)
+
+    nokta = Label(form,font=('Arial 13 bold'),bg='#bef5f4',text=':')
+    nokta1 = Label(form,font=('Arial 13 bold'),bg='#bef5f4',text=':')
+    nokta2 = Label(form,font=('Arial 13 bold'),bg='#bef5f4',text=':')
+    nokta3 = Label(form,font=('Arial 13 bold'),bg='#bef5f4',text=':')
+    nokta4 = Label(form,font=('Arial 13 bold'),bg='#bef5f4',text=':')
+
+    nokta.grid(column=1,row=0,padx=10,pady=5)
+    nokta1.grid(column=1,row=1,padx=10,pady=5)
+    nokta2.grid(column=1,row=2,padx=10,pady=5)
+    nokta3.grid(column=1,row=3,padx=10,pady=5)
+    nokta4.grid(column=1,row=4,padx=10,pady=5)
+
+
+    kayıt_grilen_ad= Entry(form,width=20)
+    kayıt_grilen_ad.grid(column=2,row=0,padx=10,pady=5)
+    kayıt_grilen_şif= Entry(form,width=20,show='*')
+    kayıt_grilen_şif.grid(column=2,row=1,padx=10,pady=5)
+    kayıt_yap_btn =Button(form,text='Kayıt Yap',bg='green',font=('Arial 13 bold'),width= 10,command=lambda: kayit_yap(kayıt_grilen_ad, kayıt_grilen_şif))
+    kayıt_yap_btn.place(x=145, y=250)
+    
+
+    
+
+
+
+    yaş2 = Spinbox(form,from_=16,to=65,width=12,font=('Arial 13 bold'),justify='center')
+    yaş2.grid(column=2,row=2,padx=10,pady=5)
+
+
+    aylar = ['Ocak','Şubat','Mart','Nisan','Mayıs','Haziran','Temmuz','Ağustos','Eylül','Ekim','Kasım','Aralık']
+    baş= StringVar(value=aylar[0])
+    dogum2 = OptionMenu(form,baş,*aylar)
+    dogum2.config(width=12,font=('Arial 10 bold'))
+    dogum2.grid(column=2,row=3,padx=10,pady=5)
+
+    def cin_seçim():
+        erk_kız_seç= (cin.get())
+        if erk_kız_seç == 1:
+            print('Cinsiyet: Erkek')
+        else:
+            print('Cinsiyet: Kadın')
+
+
+    cin = IntVar()
+    cinsiyet_erkek= Radiobutton(form,text='Erkek',variable=cin,value=1,font='Arial 10 bold',height=1,bg= '#bef5f4',activebackground='#61b9ff',command= cin_seçim)
+    cinsiyet_erkek.place(x=158,y=152)
+    cinsiyet_kız= Radiobutton(form,text='Kadın',variable=cin,value=2,font='Arial 10 bold',height=1,bg= '#bef5f4',activebackground='#ffe0e0',command= cin_seçim)
+    cinsiyet_kız.place(x=223,y=152)
+
+
+def giris_yap(grş_ent1, grş_ent2):
+    global kul_ad, şifre
+    # Giriş işlemi
+    
+    grlen_ad = grş_ent1.get()
+    grlen_şifre = grş_ent2.get()
+
+    if grlen_ad == kul_ad and grlen_şifre == şifre:
+        messagebox.showinfo("Başarılı", "Giriş Başarılı!")
+        ana_sayfa()
+    else:
+        messagebox.showerror("Hatalı", "Hatalı Giriş!")
+
+def kayit_yap(kayıt_grilen_ad, kayıt_grilen_şif):
+    
+    # Kayıt işlemi
+    global kul_ad, şifre
+
+    kul_ad_val = kayıt_grilen_ad.get()
+    sifre_val = kayıt_grilen_şif.get()
+
+    trk_harf = 'ğüşıöçĞÜŞİÖÇ'
+    kabul = int(a.get())
+    if any(char in trk_harf for char in kul_ad_val ):
+          messagebox.showerror("Hata", "Türkçe Harf Kullanılamaz!")
+    
+    elif kabul == 0 :
+        messagebox.showerror("Hata!","Kayıt Başarısız, Sözleşme Onaylanmadı!")
+    
+    elif kul_ad_val == '' or sifre_val == '':
+        messagebox.showerror("Hata!","Kayıt Başarısız, Boş Brıakmayınız!")
+    
+    else:
+        kul_ad = kul_ad_val
+        şifre = sifre_val
+        messagebox.showinfo("Başarılı", "Kayıt Başarılı!")
+        griş_ekranı()
+
+    
+    
+
+def ana_sayfa():
+    temizle()
+    Label(form,text='Ana Sayfa',font=('Ariel 16 bold'),bg='#ff6060',relief='raised',width=12,height=1).pack(pady=10)
+    dsy = Button(form,text='Dosya Yükle',font=('Ariel 12 bold'),relief='flat',bg='#bef5f4',command=dosya_yükle).place(x=70,y=80)
+    dsy = Button(form,text='Hesapla',font=('Ariel 12 bold'),relief='flat',bg='#bef5f4',command=hesapla).place(x=70,y=120)
+    dsy = Button(form,text='Çıkış Yap',font=('Ariel 12 bold'),bg='green',command=griş_ekranı).place(x=170,y=250)
+
+
+
+def hesapla():
+    temizle()
+    
+    
+
+
+    Label(form,text="Hesapla'ya Hoşgeldiniz")
+    fkr_btn = Button(form,text='Faktoriyel Hesaplayıcı',font="Arial 12 bold",bg='green',command=faktoriyel).pack(pady=15)
+    krk_btn = Button(form,text='Karekök Hesaplayıcı',font="Arial 12 bold",bg='yellow',command=karekök).pack(pady=15)
+    sbtn = Button(form,text='x Hesaplayıcı',font="Arial 12 bold").pack(pady=15)
+    btn = Button(form,text='Geri',font="Arial 15 bold",background='red',command=ana_sayfa).pack(pady=25)
+
+
+def faktoriyel():
+    temizle()
+    global faktoriyel_al
+    Label(form,text='Faktoriyel Hesapla',bg='#bef5f4',font="Arial 16 bold").pack()
+    Label(form,text='Sayınızı Girin :',font="Arial 13 bold",bg='#bef5f4').place(x=80,y=80)
+    faktoriyel_al = Entry(form)
+    faktoriyel_al.place(x=200, y=86)
+
+    hesp_btn = Button(form,text='Hesapla',bg='green',font="Arial 14 bold",command=faktoriyel_hspl).place(x=120, y=250)
+    çıkş_btn = Button(form,text='Geri',bg='red',font="Arial 14 bold",command=hesapla).place(x=220, y=250)
+    
+    
+    
+def faktoriyel_hspl():
+    try:
+        faktoriyel_deger = int(faktoriyel_al.get())  # Entry değerini alıyoruz
+        y = 1
+        orijinal_deger = faktoriyel_deger
+        while faktoriyel_deger > 0:
+            y = faktoriyel_deger * y
+            faktoriyel_deger = faktoriyel_deger - 1
+    
+        messagebox.showinfo('Başarılı!', f"{orijinal_deger} sayısının faktoriyeli:  {y}")
+    except ValueError:
+        messagebox.showerror("Hata", "Geçerli bir sayı girin!")
+
+def karekök():   
+    temizle()
+    global kök_al_taban,kök_al_kök
+    Label(form,text='Kare Kök Hesapla',bg='#bef5f4',font="Arial 16 bold").pack()
+    Label(form,text='Taban Sayınızı Girin :',font="Arial 13 bold",bg='#bef5f4').place(x=50,y=80)
+    kök_al_taban = Entry(form)
+    kök_al_taban.place(x=222, y=86)
+    Label(form,text='Kök Sayınızı Girin :',font="Arial 13 bold",bg='#bef5f4').place(x=60,y=130)
+    kök_al_kök = Entry(form)
+    kök_al_kök.place(x=220, y=136)
+
+    hesp_btn = Button(form,text='Hesapla',bg='green',font="Arial 14 bold",command=krkök_hspl).place(x=120, y=250)
+    çıkş_btn = Button(form,text='Geri',bg='red',font="Arial 14 bold",command=hesapla).place(x=220, y=250)
+
+def krkök_hspl():
+    try:
+        kök_taban = int(kök_al_taban.get())
+        kök_kök = int(kök_al_kök.get())
+        
+        köklü_sonuç= kök_taban**kök_kök
+
+        messagebox.showinfo('Başarılı!', f"{kök_taban} Üssü {kök_kök}: {köklü_sonuç}")
+    except ValueError:
+        messagebox.showerror("Hata", "Geçerli bir sayı girin!")
+    
+    
+
+        
+
+
+def dosya_yükle():
+    temizle()
+    btn_yeni_kayit = Button(form, text="Yeni Kayıt",font='Arial 12 bold', command=yeni_kayit_ekrani,padx=10)
+    btn_yeni_kayit.grid(column=0,row=0,padx=100,pady=10)
+
+    btn_eski_kayit = Button(form, text="Eski Kayıtlara Bakma", command=eski_kayit,padx=10,font='Arial 12 bold')
+    btn_eski_kayit.grid(column=0,row=1,padx=100,pady=10)
+
+    btn_kayit_sil = Button(form, text="Kayıt Silme", command=kayit_silme_ekrani,padx=10,font='Arial 12 bold')
+    btn_kayit_sil.grid(column=0,row=2,padx=100,pady=10)
+
+    btn_cikis = Button(form, text="Çıkış Yap", command=ana_sayfa,padx=10,font='Arial 12 bold')
+    btn_cikis.grid(column=0,row=3,padx=100,pady=10)
+
+
+def yeni_kayit_ekrani():
+    
+    # Yeni Kayıt Ekleme Ekranı
+    temizle()
+    
+    lbl_dosya_ismi = Label(form, text="Dosya İsmi",padx=10,pady=5,font=('Arial 12 bold'),bg='#bef5f4')
+    lbl_dosya_ismi.grid(column=0,row=0)
+
+    entry_dosya_ismi = Entry(form,font=('Arial 12 bold'))
+    entry_dosya_ismi.grid(column=2,row=0,padx=10,pady=5)
+
+    lbl_dosya_icerigi = Label(form, padx=10,pady=5,text="Dosya İçeriği",font=('Arial 12 bold'),bg='#bef5f4')
+    lbl_dosya_icerigi.grid(column=0,row=1)
+
+    entry_dosya_icerigi = Entry(form,font=('Arial 12 bold'))
+    entry_dosya_icerigi.grid(column=2,row=1,padx=10,pady=5)
+
+    btn_kaydet = Button(form, text="Kaydet", command=lambda: yeni_kayit(entry_dosya_ismi, entry_dosya_icerigi),
+                        font=('Arial 12 bold'))
+    btn_kaydet.place(x=80, y=250)
+
+    btn_geri = Button(form, text="Ana Sayfaya Dön", command=ana_sayfa,font=('Arial 12 bold'))
+    btn_geri.place(x=170, y=250)
+
+    Label(form,text=':',font=('Arial 12 bold'),padx=10,pady=10,bg='#bef5f4').grid(column=1,row=0)
+    Label(form,text=':',font=('Arial 12 bold'),padx=10,pady=10,bg='#bef5f4').grid(column=1,row=1)
+
+def yeni_kayit(entry_dosya_ismi, entry_dosya_icerigi):
+    # Yeni Kayıt İşlemi
+    dosya_ismi = entry_dosya_ismi.get()
+    dosya_icerigi = entry_dosya_icerigi.get()
+
+    if dosya_ismi and dosya_icerigi:
+        kayıtlı_dosyalar[dosya_ismi] = dosya_icerigi
+        messagebox.showinfo("Başarılı", "Not Kaydedildi!")
+        dosya_yükle()
+    else:
+        messagebox.showerror("Hata", "Boş bırakmayın!")
+
+def eski_kayit():
+    if kayıtlı_dosyalar:
+        dosalar = "\n".join([f"{key}: {value}" for key, value in kayıtlı_dosyalar.items()])
+        messagebox.showinfo("Eski Kayıtlar",dosalar)
+    else:
+        messagebox.showwarning("Hata!","Kayıt Bulunamadı")
+
+def kayit_silme_ekrani():
+    temizle()
+    global silinecek_enty
+    Label(form,text='Silinecek Dosya Adı   :',bg='#bef5f4',font='Arial 12 bold').grid(column=0,row=0,padx=10,pady=40)
+    silinecek_enty = Entry(form,font='Arial 12 bold')
+    silinecek_enty.grid(column=1,row=0,padx=10,pady=40)
+    silici_btn = Button(form,text='Dosyayı Sil',font='Arial 12 bold',command=sil).place(x=150,y=240)
+
+def sil():
+    sil_dosya = silinecek_enty.get()
+    if sil_dosya in kayıtlı_dosyalar:
+    
+        del kayıtlı_dosyalar[sil_dosya]
+        messagebox.showinfo("Başarılı!","Dosya Silindi!")
+        dosya_yükle()
+
+    else:
+        messagebox.showerror("Hata!","Dosya Bulunamıyor!")
+        kayit_silme_ekrani()
+
+griş_ekranı()
+form.mainloop()
